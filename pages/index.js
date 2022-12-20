@@ -1,23 +1,89 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import buildspaceLogo from '../assets/buildspace-logo.png';
+import { useState } from 'react';
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+
+
 
 const Home = () => {
+  
+  const [userInput, setUserInput] = useState('');
+
+  const [apiOutput, setApiOutput] = useState('')
+const [isGenerating, setIsGenerating] = useState(false)
+
+const callGenerateEndpoint = async () => {
+  setIsGenerating(true);
+  
+  console.log("Calling OpenAI...")
+  const response = await fetch('/api/generate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ userInput }),
+  });
+
+  const data = await response.json();
+  const { output } = data;
+  console.log("OpenAI replied...", output.text)
+
+  setApiOutput(`${output.text}`);
+  setIsGenerating(false);
+}
+  
+  const onUserChangedText = (event) => {
+    console.log(event.target.value);
+    setUserInput(event.target.value);
+  };
+
   return (
     <div className="root">
-      <Head>
-        <title>GPT-3 Writer | buildspace</title>
-      </Head>
+      <title>Snipperator | Code Snippet Generator</title>
       <div className="container">
         <div className="header">
           <div className="header-title">
-            <h1>sup, insert your headline here</h1>
+            <h1>Snipperator</h1>
           </div>
           <div className="header-subtitle">
-            <h2>insert your subtitle here</h2>
+            <h2>Insert your queries here. It can be as specific as you want or just go wild.</h2>
           </div>
         </div>
+        {/* Add this code here*/}
+        <div className="prompt-container">
+          <textarea placeholder="Ex. Write me a program in Java to add two numbers." className="prompt-box" value ={userInput} onChange={onUserChangedText} />
+          
+          <div className="prompt-buttons">
+           <a className={isGenerating ? 'generate-button loading' : 'generate-button'}
+                          onClick={callGenerateEndpoint}>
+              
+              <div className="generate">
+                              {isGenerating ? <span className="loader"></span> : <p>Generate</p>}
+              </div>
+           
+           </a>
+          </div>
+
+          {apiOutput && (
+          <div className="output">
+            <div className="output-header-container">
+              <div className="output-header">
+                <h3>Output</h3>
+              </div>
+            </div>
+          <div className="output-content">
+          <SyntaxHighlighter language="javascript" style={vscDarkPlus} customStyle={{borderRadius: "5px", backgroundColor: "#121212"}} >
+              {apiOutput}
+          </SyntaxHighlighter>
       </div>
+    </div>
+    )}
+        
+        </div>
+      </div>
+      
       <div className="badge-container grow">
         <a
           href="https://buildspace.so/builds/ai-writer"

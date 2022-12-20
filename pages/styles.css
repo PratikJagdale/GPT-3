@@ -78,6 +78,10 @@ body {
     width: min-content;
 }
 
+.prompt-box::-webkit-scrollbar{
+    display: none;
+  }
+
 .prompt-box {
     border-bottom-width: 1px;
     border-color: rgba(255, 255, 255, 0.1);
@@ -112,6 +116,8 @@ body {
     text-decoration: none;
     text-transform: none;
 }
+
+
 
 textarea {
     font-family: 'Manrope', sans-serif;
@@ -309,6 +315,7 @@ textarea {
     text-transform: none;
     margin: 0;
 }
+
 
 .output-content {
     outline: none;
