@@ -48,7 +48,8 @@ const callGenerateEndpoint = async () => {
             <h1>Snipperator</h1>
           </div>
           <div className="header-subtitle">
-            <h2>Insert your queries here. It can be as specific as you want or just go wild.</h2>
+            <h2>Insert your queries here. 
+              It can be as specific as you want or just go wild.</h2>
           </div>
         </div>
         {/* Add this code here*/}
@@ -86,13 +87,13 @@ const callGenerateEndpoint = async () => {
       
       <div className="badge-container grow">
         <a
-          href="https://buildspace.so/builds/ai-writer"
+          href="https://instagram.com/pratiikjagdale/"
           target="_blank"
           rel="noreferrer"
         >
           <div className="badge">
             <Image src={buildspaceLogo} alt="buildspace logo" />
-            <p>build with buildspace</p>
+            <p>pratik jagdale</p>
           </div>
         </a>
       </div>
